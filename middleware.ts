@@ -1,13 +1,20 @@
-import { clerkMiddleware } from "@clerk/nextjs/server";
+import { authMiddleware } from "@clerk/nextjs";
 
-export default clerkMiddleware();
+export default authMiddleware({
+  publicRoutes: [
+    "/", // Allow unauthenticated access to homepage
+    "/products(.*)", // Allow public product pages
+    "/api/public/(.*)", // Example public API path
+  ],
+});
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    // Always run for API routes
-    "/(api|trpc)(.*)",
+    /*
+     * Match all paths except:
+     * - static files (_next, assets, etc.)
+     * - public files (e.g. .png, .css)
+     */
+    "/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)",
   ],
 };
-    
