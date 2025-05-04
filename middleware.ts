@@ -8,5 +8,5 @@ export const config = {
     "/((?!_next/static|_next/image|favicon.ico|logo.svg|.*\\..*).*)",
   ],
 };
-export const runtime = "edge";
+
 // export const config = {
