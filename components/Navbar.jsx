@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { assets, BagIcon, BoxIcon, CartIcon, HomeIcon } from "@/assets/assets";
 import Link from "next/link";
 import { useAppContext } from "@/context/AppContext";
@@ -9,9 +9,11 @@ import { useClerk, UserButton } from "@clerk/nextjs";
 const Navbar = () => {
   const { isSeller, router, user } = useAppContext();
   const { openSignIn } = useClerk();
+  const [showSearch, setShowSearch] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
-    <nav className="flex items-center justify-between px-6 md:px-16 lg:px-32 py-3 border-b border-gray-300 text-gray-700">
+    <nav className="flex items-center justify-between px-6 md:px-16 lg:px-32 py-3 border-b border-gray-300 text-gray-700 relative">
       <Image
         className="cursor-pointer w-28 md:w-32"
         onClick={() => router.push("/")}
@@ -42,8 +44,12 @@ const Navbar = () => {
         )}
       </div>
 
-      <ul className="hidden md:flex items-center gap-4 ">
-        <Image className="w-4 h-4" src={assets.search_icon} alt="search icon" />
+      <ul className="hidden md:flex items-center gap-4">
+        {/* Search Icon */}
+        <button onClick={() => setShowSearch(!showSearch)}>
+          <Image className="w-4 h-4" src={assets.search_icon} alt="search icon" />
+        </button>
+
         {user ? (
           <>
             <UserButton>
@@ -80,7 +86,6 @@ const Navbar = () => {
             onClick={() => router.push("/seller")}
             className="text-xs border px-4 py-1.5 rounded-full"
           >
-            {" "}
             Seller Dashboard
           </button>
         )}
@@ -127,6 +132,19 @@ const Navbar = () => {
           </button>
         )}
       </div>
+
+      {/* Search Input Dropdown */}
+      {showSearch && (
+        <div className="absolute top-full right-6 md:right-16 lg:right-32 mt-2 w-64 bg-white shadow-md border rounded z-50 p-2">
+          <input
+            type="text"
+            placeholder="Search products..."
+            className="w-full px-3 py-2 border rounded text-sm focus:outline-none focus:ring focus:border-blue-300"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+      )}
     </nav>
   );
 };

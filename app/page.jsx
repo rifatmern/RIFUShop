@@ -6,7 +6,9 @@ import Banner from "@/components/Banner";
 import NewsLetter from "@/components/NewsLetter";
 import FeaturedProduct from "@/components/FeaturedProduct";
 import Navbar from "@/components/Navbar";
+import BackTop from "@/components/BackTop";
 import Footer from "@/components/Footer";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 const Home = () => {
   return (
@@ -18,6 +20,8 @@ const Home = () => {
         <FeaturedProduct />
         <Banner />
         <NewsLetter />
+        <BackTop/>
+        <WhatsAppButton/>
       </div>
       <Footer />
     </>
